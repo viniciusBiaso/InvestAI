@@ -4,7 +4,7 @@ import { z } from "zod"
 import { useAuth } from "../context/AuthContext"
 import { Button } from "../components/ui/Button"
 import { motion } from "framer-motion"
-import { Loader2, AlertCircle, CheckCircle2 } from "lucide-react"
+import { Loader2, AlertCircle, CheckCircle2, Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
 
 const registerSchema = z.object({
@@ -20,6 +20,7 @@ const registerSchema = z.object({
 export default function Register({ onToggleLogin, onLoginSuccess }) {
     const { register: registerAuth } = useAuth()
     const [error, setError] = useState("")
+    const [showPassword, setShowPassword] = useState(false)
 
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
         resolver: zodResolver(registerSchema)
@@ -98,20 +99,27 @@ export default function Register({ onToggleLogin, onLoginSuccess }) {
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
-                            <div>
+                            <div className="relative">
                                 <label className="block text-sm font-medium text-white/70 mb-2">Senha</label>
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     {...register("password")}
                                     className={`w-full bg-white/5 border ${errors.password ? 'border-red-500' : 'border-white/10'} rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-lime-accent/50 transition-all`}
                                     placeholder="Mín 8 carac."
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-[38px] text-white/50 hover:text-white transition-colors"
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
                                 {errors.password && <p className="text-red-400 text-xs mt-1">{errors.password.message}</p>}
                             </div>
-                            <div>
+                            <div className="relative">
                                 <label className="block text-sm font-medium text-white/70 mb-2">Confirmar</label>
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     {...register("confirmPassword")}
                                     className={`w-full bg-white/5 border ${errors.confirmPassword ? 'border-red-500' : 'border-white/10'} rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-lime-accent/50 transition-all`}
                                     placeholder="Repita"

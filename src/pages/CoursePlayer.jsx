@@ -5,7 +5,11 @@ import remarkGfm from 'remark-gfm'
 import SyllabusSidebar from "../components/academy/SyllabusSidebar"
 import { COURSE_CONTENT } from "../data/courseContent"
 
+import { useAuth } from "../context/AuthContext" // Import Auth
+
 export default function CoursePlayer({ courseId, onBack }) {
+
+    const { user } = useAuth() // Get User
 
     useEffect(() => {
         console.log("CoursePlayer Overlay mounted with ID:", courseId)
@@ -24,11 +28,15 @@ export default function CoursePlayer({ courseId, onBack }) {
 
     // PROGRESS TRACKING STATE
     const [completedLessons, setCompletedLessons] = useState(() => {
-        const saved = localStorage.getItem("investai_progress")
+        if (!user) return {}
+        const storageKey = `investai_progress_${user.id}`
+        const saved = localStorage.getItem(storageKey)
         return saved ? JSON.parse(saved) : {}
     })
 
     const markLessonComplete = (lessonId) => {
+        if (!user) return
+
         setCompletedLessons(prev => {
             const courseProgress = prev[courseId] || []
             if (courseProgress.includes(lessonId)) return prev
@@ -37,7 +45,12 @@ export default function CoursePlayer({ courseId, onBack }) {
                 ...prev,
                 [courseId]: [...courseProgress, lessonId]
             }
-            localStorage.setItem("investai_progress", JSON.stringify(newProgress))
+            const storageKey = `investai_progress_${user.id}`
+            localStorage.setItem(storageKey, JSON.stringify(newProgress))
+
+            // Dispatch custom event to notify same-window listeners
+            window.dispatchEvent(new Event('storage'))
+
             return newProgress
         })
     }
@@ -122,16 +135,16 @@ export default function CoursePlayer({ courseId, onBack }) {
     }
 
     return (
-        <div className="fixed inset-0 z-50 bg-charcoal text-white flex overflow-hidden font-sans selection:bg-lime-accent selection:text-charcoal animate-in fade-in duration-300">
+        <div className="fixed inset-0 z-50 bg-white dark:bg-charcoal text-slate-900 dark:text-white flex overflow-hidden font-sans selection:bg-lime-accent selection:text-charcoal animate-in fade-in duration-300 transition-colors">
             {/* Main Content Area (70%) */}
             <div className="flex-1 flex flex-col h-full relative z-0">
 
                 {/* Sticky Header */}
-                <header className="sticky top-0 bg-charcoal/90 backdrop-blur-md border-b border-white/5 z-20 px-8 py-4 flex items-center justify-between">
+                <header className="sticky top-0 bg-white/90 dark:bg-charcoal/90 backdrop-blur-md border-b border-slate-200 dark:border-white/5 z-20 px-8 py-4 flex items-center justify-between transition-colors">
                     <div className="flex items-center gap-4">
                         <button
                             onClick={handleExit}
-                            className="p-2 -ml-2 text-white/50 hover:text-white hover:bg-white/5 rounded-full transition-all group"
+                            className="p-2 -ml-2 text-slate-500 dark:text-white/50 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 rounded-full transition-all group"
                             title="Salvar e Voltar"
                         >
                             <ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
@@ -149,12 +162,12 @@ export default function CoursePlayer({ courseId, onBack }) {
 
                 {/* Scrollable Content */}
                 <main className="flex-1 overflow-y-auto custom-scrollbar p-8 lg:px-16 xl:px-24">
-                    <article className="prose prose-invert prose-lg max-w-4xl mx-auto
-                        prose-headings:text-white prose-headings:font-bold prose-h1:text-4xl prose-h1:mb-8
-                        prose-p:text-gray-300 prose-p:leading-relaxed
-                        prose-strong:text-lime-accent prose-strong:font-bold
-                        prose-blockquote:border-l-lime-accent prose-blockquote:text-white/80 prose-blockquote:bg-white/5 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r-lg
-                        prose-li:text-gray-300 prose-ul:list-disc
+                    <article className="prose dark:prose-invert prose-lg max-w-4xl mx-auto
+                        prose-headings:text-slate-900 dark:prose-headings:text-white prose-headings:font-bold prose-h1:text-4xl prose-h1:mb-8
+                        prose-p:text-slate-600 dark:prose-p:text-gray-300 prose-p:leading-relaxed
+                        prose-strong:text-emerald-600 dark:prose-strong:text-lime-accent prose-strong:font-bold
+                        prose-blockquote:border-l-emerald-500 dark:prose-blockquote:border-l-lime-accent prose-blockquote:text-slate-700 dark:prose-blockquote:text-white/80 prose-blockquote:bg-slate-100 dark:prose-blockquote:bg-white/5 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r-lg
+                        prose-li:text-slate-600 dark:prose-li:text-gray-300 prose-ul:list-disc
                         [&>*:first-child]:mt-0"
                     >
                         <Markdown remarkPlugins={[remarkGfm]}>
@@ -163,12 +176,12 @@ export default function CoursePlayer({ courseId, onBack }) {
                     </article>
 
                     {/* Bottom Action Bar (in flow) */}
-                    <div className="max-w-4xl mx-auto mt-20 pb-20 flex items-center justify-between pt-8 border-t border-white/5">
+                    <div className="max-w-4xl mx-auto mt-20 pb-20 flex items-center justify-between pt-8 border-t border-slate-200 dark:border-white/5">
                         <button
                             onClick={handlePrev}
                             disabled={!prevLesson}
-                            className={`flex items-center gap-3 px-6 py-3 rounded-xl border border-white/10 font-bold transition-all
-                                ${!prevLesson ? 'opacity-0 cursor-default' : 'hover:bg-white/5 hover:border-white/20 text-white'}`}
+                            className={`flex items-center gap-3 px-6 py-3 rounded-xl border border-slate-300 dark:border-white/10 font-bold transition-all
+                                ${!prevLesson ? 'opacity-0 cursor-default' : 'hover:bg-slate-100 dark:hover:bg-white/5 hover:border-slate-400 dark:hover:border-white/20 text-slate-700 dark:text-white'}`}
                         >
                             <ChevronLeft size={20} />
                             Aula Anterior

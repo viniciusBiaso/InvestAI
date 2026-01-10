@@ -17,7 +17,7 @@ export default function Settings({ user }) {
     ]
 
     return (
-        <div className="pb-32 animate-fade-in">
+        <div className="pb-32 animate-fade-in text-slate-900 dark:text-white transition-colors duration-300">
             <h1 className="text-3xl font-bold mb-8">Configurações</h1>
 
             <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
@@ -34,11 +34,11 @@ export default function Settings({ user }) {
                                 className={`
                                     w-full flex items-center gap-3 px-4 py-3 rounded-r-xl border-l-[3px] transition-all text-sm font-medium
                                     ${isActive
-                                        ? 'bg-white/5 border-lime-accent text-white'
-                                        : 'border-transparent text-white/50 hover:text-white hover:bg-white/5'}
+                                        ? 'bg-lime-accent/10 dark:bg-white/5 border-lime-accent text-slate-900 dark:text-white font-bold'
+                                        : 'border-transparent text-slate-500 dark:text-white/50 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'}
                                 `}
                             >
-                                <Icon size={18} className={isActive ? "text-lime-accent" : ""} />
+                                <Icon size={18} className={isActive ? "text-emerald-600 dark:text-lime-accent" : ""} />
                                 {tab.label}
                             </button>
                         )
@@ -46,7 +46,7 @@ export default function Settings({ user }) {
                 </aside>
 
                 {/* Content Area */}
-                <div className="flex-1 bg-charcoal min-h-[500px]">
+                <div className="flex-1 bg-white dark:bg-charcoal min-h-[500px] rounded-xl border border-transparent dark:border-white/5 transition-colors">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={activeTab}

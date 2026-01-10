@@ -21,7 +21,7 @@ import CoursePlayer from "./pages/CoursePlayer"
 function LandingPage() {
   const navigate = useNavigate()
   return (
-    <div className="min-h-screen bg-charcoal text-white selection:bg-lime-accent selection:text-charcoal relative">
+    <div className="min-h-screen bg-slate-50 dark:bg-charcoal text-slate-900 dark:text-white selection:bg-lime-accent selection:text-charcoal relative transition-colors duration-300">
       <Navbar onLogin={() => navigate("/login")} />
       <main>
         <Hero />
@@ -67,29 +67,33 @@ function AppShell() {
   return <Dashboard user={user} onLogout={logout} />
 }
 
+import { ThemeProvider } from "./context/ThemeContext"
+
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<AuthLoginRoute />} />
-          <Route path="/register" element={<AuthRegisterRoute />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+      <ThemeProvider>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<AuthLoginRoute />} />
+            <Route path="/register" element={<AuthRegisterRoute />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
 
-          <Route path="/app" element={
-            <PrivateRoute>
-              <AppShell />
-            </PrivateRoute>
-          } />
+            <Route path="/app" element={
+              <PrivateRoute>
+                <AppShell />
+              </PrivateRoute>
+            } />
 
-          <Route path="/player/:courseId" element={
-            <PrivateRoute>
-              <CoursePlayer />
-            </PrivateRoute>
-          } />
-        </Routes>
-      </AuthProvider>
+            <Route path="/player/:courseId" element={
+              <PrivateRoute>
+                <CoursePlayer />
+              </PrivateRoute>
+            } />
+          </Routes>
+        </AuthProvider>
+      </ThemeProvider>
     </Router>
   )
 }

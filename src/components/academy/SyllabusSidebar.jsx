@@ -21,16 +21,16 @@ export default function SyllabusSidebar({ course, currentLessonId, onSelectLesso
     let absoluteLessonIndex = 0
 
     return (
-        <div className="w-full h-full bg-zinc-900 border-l border-white/5 flex flex-col">
-            <div className="p-6 border-b border-white/5">
-                <h3 className="text-white font-bold text-lg mb-1">Conteúdo do Curso</h3>
-                <p className="text-xs text-white/40 uppercase tracking-widest font-medium">
+        <div className="w-full h-full bg-white dark:bg-zinc-900 border-l border-slate-200 dark:border-white/5 flex flex-col transition-colors">
+            <div className="p-6 border-b border-slate-200 dark:border-white/5">
+                <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-1">Conteúdo do Curso</h3>
+                <p className="text-xs text-slate-500 dark:text-white/40 uppercase tracking-widest font-medium">
                     {course.modules.reduce((acc, m) => acc + m.lessons.length, 0)} Aulas • {course.progress}% Concluído
                 </p>
                 {/* Visual Progress Bar */}
-                <div className="w-full bg-white/10 h-1.5 rounded-full mt-4 overflow-hidden">
+                <div className="w-full bg-slate-200 dark:bg-white/10 h-1.5 rounded-full mt-4 overflow-hidden">
                     <div
-                        className="h-full bg-lime-accent"
+                        className="h-full bg-emerald-500 dark:bg-lime-accent"
                         style={{ width: `${course.progress}%` }}
                     />
                 </div>
@@ -38,17 +38,17 @@ export default function SyllabusSidebar({ course, currentLessonId, onSelectLesso
 
             <div className="flex-1 overflow-y-auto custom-scrollbar">
                 {course.modules.map((module, moduleIdx) => (
-                    <div key={moduleIdx} className="border-b border-white/5 last:border-0">
+                    <div key={moduleIdx} className="border-b border-slate-200 dark:border-white/5 last:border-0">
                         <button
                             onClick={() => toggleModule(moduleIdx)}
-                            className="w-full flex items-center justify-between p-4 hover:bg-white/5 transition-colors group"
+                            className="w-full flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group"
                         >
-                            <span className="font-semibold text-white/80 group-hover:text-white transition-colors text-sm text-left">
+                            <span className="font-semibold text-slate-700 dark:text-white/80 group-hover:text-slate-900 dark:group-hover:text-white transition-colors text-sm text-left">
                                 {module.title}
                             </span>
                             {expandedModules.includes(moduleIdx)
-                                ? <ChevronDown size={16} className="text-white/40" />
-                                : <ChevronRight size={16} className="text-white/40" />
+                                ? <ChevronDown size={16} className="text-slate-400 dark:text-white/40" />
+                                : <ChevronRight size={16} className="text-slate-400 dark:text-white/40" />
                             }
                         </button>
 
@@ -58,7 +58,7 @@ export default function SyllabusSidebar({ course, currentLessonId, onSelectLesso
                                     initial={{ height: 0, opacity: 0 }}
                                     animate={{ height: "auto", opacity: 1 }}
                                     exit={{ height: 0, opacity: 0 }}
-                                    className="overflow-hidden bg-black/20"
+                                    className="overflow-hidden bg-slate-50 dark:bg-black/20"
                                 >
                                     {module.lessons.map((lesson) => {
                                         absoluteLessonIndex++
@@ -72,8 +72,8 @@ export default function SyllabusSidebar({ course, currentLessonId, onSelectLesso
                                                 className={clsx(
                                                     "relative py-3 px-4 flex items-start gap-3 cursor-pointer transition-all border-l-[3px]",
                                                     isActive
-                                                        ? "bg-emerald-900/20 border-lime-accent"
-                                                        : "border-transparent hover:bg-white/5",
+                                                        ? "bg-emerald-100 dark:bg-emerald-900/20 border-emerald-500 dark:border-lime-accent"
+                                                        : "border-transparent hover:bg-slate-100 dark:hover:bg-white/5",
                                                     isLocked && "opacity-50 cursor-not-allowed hover:bg-transparent"
                                                 )}
                                             >
@@ -82,23 +82,23 @@ export default function SyllabusSidebar({ course, currentLessonId, onSelectLesso
                                                     {lesson.isCompleted ? (
                                                         <CheckCircle size={16} className="text-emerald-500" />
                                                     ) : isLocked ? (
-                                                        <Lock size={16} className="text-white/30" />
+                                                        <Lock size={16} className="text-slate-400 dark:text-white/30" />
                                                     ) : isActive ? (
-                                                        <PlayCircle size={16} className="text-lime-accent" />
+                                                        <PlayCircle size={16} className="text-emerald-600 dark:text-lime-accent" />
                                                     ) : (
-                                                        <div className="w-4 h-4 rounded-full border border-white/20" />
+                                                        <div className="w-4 h-4 rounded-full border border-slate-300 dark:border-white/20" />
                                                     )}
                                                 </div>
 
                                                 <div className="flex-1 min-w-0">
                                                     <p className={clsx(
                                                         "text-sm font-medium leading-snug mb-1",
-                                                        isActive ? "text-white" : "text-white/70",
-                                                        lesson.isCompleted && "text-white/40 line-through decoration-white/20"
+                                                        isActive ? "text-slate-900 dark:text-white" : "text-slate-600 dark:text-white/70",
+                                                        lesson.isCompleted && "text-slate-400 dark:text-white/40 line-through decoration-slate-300 dark:decoration-white/20"
                                                     )}>
                                                         {lesson.title}
                                                     </p>
-                                                    <div className="flex items-center gap-2 text-[10px] text-white/30 uppercase tracking-wider font-mono">
+                                                    <div className="flex items-center gap-2 text-[10px] text-slate-400 dark:text-white/30 uppercase tracking-wider font-mono">
                                                         <span>{lesson.type === 'video' ? 'Vídeo' : 'Texto'}</span>
                                                         <span>•</span>
                                                         <span>{lesson.duration}</span>

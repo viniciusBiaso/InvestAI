@@ -6,11 +6,14 @@ from typing import Optional
 from pydantic import BaseModel
 
 import models, auth, database
+from routers import market
 
 # Create tables
 models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI()
+
+app.include_router(market.router)
 
 # Startup Event: Seed Admin
 @app.on_event("startup")
@@ -236,10 +239,7 @@ Sua carteira parece equilibrada. Para otimizar:
 
 # CORS (Allow Frontend)
 from fastapi.middleware.cors import CORSMiddleware
-origins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
+origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,

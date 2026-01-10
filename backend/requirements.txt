@@ -7,3 +7,6 @@ bcrypt==3.2.2
 python-multipart
 # Add any other dependencies if needed
 psycopg2-binary
+yfinance
+pandas
+cachetools

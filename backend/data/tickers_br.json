@@ -1,0 +1,126 @@
+[
+    {
+        "ticker": "PETR4.SA",
+        "name": "Petrobras PN"
+    },
+    {
+        "ticker": "VALE3.SA",
+        "name": "Vale S.A."
+    },
+    {
+        "ticker": "ITUB4.SA",
+        "name": "Itaú Unibanco"
+    },
+    {
+        "ticker": "BBDC4.SA",
+        "name": "Banco Bradesco"
+    },
+    {
+        "ticker": "BBAS3.SA",
+        "name": "Banco do Brasil"
+    },
+    {
+        "ticker": "ABEV3.SA",
+        "name": "Ambev"
+    },
+    {
+        "ticker": "WEGE3.SA",
+        "name": "WEG"
+    },
+    {
+        "ticker": "MGLU3.SA",
+        "name": "Magazine Luiza"
+    },
+    {
+        "ticker": "VIIA3.SA",
+        "name": "Via"
+    },
+    {
+        "ticker": "PRIO3.SA",
+        "name": "Prio (PetroRio)"
+    },
+    {
+        "ticker": "ELET3.SA",
+        "name": "Eletrobras"
+    },
+    {
+        "ticker": "RENT3.SA",
+        "name": "Localiza"
+    },
+    {
+        "ticker": "RAIL3.SA",
+        "name": "Rumo"
+    },
+    {
+        "ticker": "JBSS3.SA",
+        "name": "JBS"
+    },
+    {
+        "ticker": "SUZB3.SA",
+        "name": "Suzano"
+    },
+    {
+        "ticker": "BPAC11.SA",
+        "name": "BTG Pactual"
+    },
+    {
+        "ticker": "HAPV3.SA",
+        "name": "Hapvida"
+    },
+    {
+        "ticker": "RDOR3.SA",
+        "name": "Rede D'Or"
+    },
+    {
+        "ticker": "LREN3.SA",
+        "name": "Lojas Renner"
+    },
+    {
+        "ticker": "GGBR4.SA",
+        "name": "Gerdau"
+    },
+    {
+        "ticker": "BTC-USD",
+        "name": "Bitcoin USD"
+    },
+    {
+        "ticker": "ETH-USD",
+        "name": "Ethereum USD"
+    },
+    {
+        "ticker": "SOL-USD",
+        "name": "Solana USD"
+    },
+    {
+        "ticker": "AAPL",
+        "name": "Apple Inc."
+    },
+    {
+        "ticker": "MSFT",
+        "name": "Microsoft Corp."
+    },
+    {
+        "ticker": "GOOGL",
+        "name": "Alphabet Inc."
+    },
+    {
+        "ticker": "AMZN",
+        "name": "Amazon.com"
+    },
+    {
+        "ticker": "NVDA",
+        "name": "NVIDIA Corp."
+    },
+    {
+        "ticker": "TSLA",
+        "name": "Tesla Inc."
+    },
+    {
+        "ticker": "IVVB11.SA",
+        "name": "iShares S&P 500 (B3)"
+    },
+    {
+        "ticker": "BOVA11.SA",
+        "name": "iShares Ibovespa"
+    }
+]

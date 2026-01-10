@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-wealth-green: #004d40;
@@ -12,30 +13,60 @@
 
 @layer base {
   :root {
+    /* LIGHT MODE BASE COLORS (Platinum Theme) */
+    --background: 248 250 252;
+    /* slate-50 */
+    --foreground: 15 23 42;
+    /* slate-900 */
+    --surface: 255 255 255;
+    /* white */
+    --surface-border: 226 232 240;
+    /* slate-200 */
+
+    --color-bg-app: rgb(248 250 252);
+    --color-text-primary: rgb(15 23 42);
+    --color-panel: rgb(255 255 255);
+    --color-border: rgb(226 232 240);
+  }
+
+  /* DARK MODE OVERRIDES */
+  :root.dark {
     --background: 10 10 10;
     --foreground: 255 255 255;
+    --surface: 255 255 255;
+    /* Opacity calculated in components */
+    --surface-border: 255 255 255;
+    /* Opacity used in components */
+
+    --color-bg-app: #0a0a0a;
+    /* charcoal */
+    --color-text-primary: #ffffff;
+    --color-panel: rgba(255, 255, 255, 0.05);
+    --color-border: rgba(255, 255, 255, 0.05);
   }
 
   body {
-    @apply bg-charcoal text-white font-sans antialiased overflow-x-hidden;
+    /* Use CSS Variables for transitioning body background */
+    background-color: var(--color-bg-app);
+    color: var(--color-text-primary);
+    @apply font-sans antialiased overflow-x-hidden transition-colors duration-300;
   }
 
-  /* Custom Scrollbar */
+  /* Custom Scrollbar (Dark aware) */
   ::-webkit-scrollbar {
     width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #0a0a0a;
+    @apply bg-transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #333;
-    border-radius: 4px;
+    @apply bg-slate-300 dark:bg-zinc-800 rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #444;
+    @apply bg-slate-400 dark:bg-zinc-700;
   }
 }
 

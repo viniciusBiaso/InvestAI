@@ -7,10 +7,18 @@ import MorningBrief from "./MorningBrief"
 import WalletDashboard from "./portfolio/WalletDashboard"
 import Academy from "../pages/Academy"
 import Settings from "../pages/Settings"
+import ThemeToggle from "./ui/ThemeToggle"
+import OmniSearch from "./ui/OmniSearch"
 
 export default function Dashboard({ user, onLogout }) {
     const [showChat, setShowChat] = useState(false)
     const [currentView, setCurrentView] = useState("overview") // 'overview' | 'wallet' | 'academy' | 'settings'
+    const [walletTicker, setWalletTicker] = useState("IBOV")
+
+    const handleAssetSelect = (ticker) => {
+        setWalletTicker(ticker)
+        setCurrentView("wallet")
+    }
 
     const isAdmin = user.profile === "admin"
     const isConservative = user.profile === "conservative"
@@ -22,15 +30,15 @@ export default function Dashboard({ user, onLogout }) {
             : ASSETS
 
     return (
-        <div className="min-h-screen bg-charcoal text-white flex overflow-hidden font-sans">
+        <div className="min-h-screen bg-slate-50 dark:bg-charcoal text-slate-900 dark:text-white flex overflow-hidden font-sans transition-colors duration-300">
             {/* Sidebar (Desktop) */}
-            <aside className="hidden lg:flex w-72 flex-col border-r border-white/5 bg-black/20 backdrop-blur-md">
-                <div className="p-6 border-b border-white/5">
+            <aside className="hidden lg:flex w-72 flex-col border-r border-slate-200 dark:border-white/5 bg-white dark:bg-black/20 backdrop-blur-md">
+                <div className="p-6 border-b border-slate-200 dark:border-white/5">
                     <div className="flex items-center gap-2 mb-1">
-                        <div className="w-8 h-8 bg-lime-accent rounded-lg flex items-center justify-center text-charcoal font-bold">I</div>
-                        <span className="font-bold text-xl tracking-tight">InvestAI</span>
+                        <div className="w-8 h-8 bg-black dark:bg-lime-accent rounded-lg flex items-center justify-center text-white dark:text-charcoal font-bold shadow-sm">I</div>
+                        <span className="font-bold text-xl tracking-tight text-slate-900 dark:text-white">InvestAI</span>
                     </div>
-                    <span className="text-xs text-white/40 uppercase tracking-widest pl-10">Dashboard</span>
+                    <span className="text-xs text-slate-500 dark:text-white/40 uppercase tracking-widest pl-10">Dashboard</span>
                 </div>
 
                 <nav className="flex-1 p-4 space-y-2">
@@ -55,28 +63,31 @@ export default function Dashboard({ user, onLogout }) {
                     <NavItem icon={<TrendingUp size={20} />} label="Oportunidades" />
                 </nav>
 
-                <div className="p-4 border-t border-white/5">
+                <div className="p-4 border-t border-slate-200 dark:border-white/5">
+                    <div className="mb-4">
+                        <ThemeToggle />
+                    </div>
                     <button
                         onClick={() => setCurrentView("settings")}
-                        className={`w-full flex items-center gap-3 p-3 text-sm rounded-lg mb-2 transition-colors ${currentView === 'settings' ? 'bg-white/10 text-white font-bold' : 'text-white/60 hover:bg-white/5 hover:text-white'}`}
+                        className={`w-full flex items-center gap-3 p-3 text-sm rounded-lg mb-2 transition-colors ${currentView === 'settings' ? 'bg-lime-accent text-charcoal font-bold shadow-sm' : 'text-slate-500 dark:text-white/60 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'}`}
                     >
                         <SettingsIcon size={18} /> Configurações
                     </button>
 
-                    <div className="bg-white/5 rounded-xl p-4 mb-4">
+                    <div className="bg-slate-100 dark:bg-white/5 rounded-xl p-4 mb-4 border border-slate-200 dark:border-transparent">
                         <div className="flex items-center gap-3 mb-2">
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-lime-accent to-emerald-600 flex items-center justify-center text-charcoal font-bold text-lg">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-lime-accent to-emerald-600 flex items-center justify-center text-charcoal font-bold text-lg shadow-sm">
                                 {user.name.charAt(0)}
                             </div>
                             <div>
-                                <p className="font-medium text-sm">{user.name}</p>
-                                <p className="text-xs text-white/50 capitalize">{user.profile || "Perfil Padrão"}</p>
+                                <p className="font-medium text-sm text-slate-900 dark:text-white">{user.name}</p>
+                                <p className="text-xs text-slate-500 dark:text-white/50 capitalize">{user.profile || "Perfil Padrão"}</p>
                             </div>
                         </div>
                     </div>
                     <button
                         onClick={onLogout}
-                        className="w-full flex items-center gap-2 p-3 text-sm text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                        className="w-full flex items-center gap-2 p-3 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors"
                     >
                         <LogOut size={16} /> Sair da Conta
                     </button>
@@ -84,9 +95,9 @@ export default function Dashboard({ user, onLogout }) {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 bg-charcoal relative overflow-y-auto customized-scrollbar">
+            <main className="flex-1 bg-slate-50 dark:bg-charcoal relative overflow-y-auto customized-scrollbar transition-colors duration-300">
                 {/* Mobile Header */}
-                <header className="sticky top-0 z-30 bg-charcoal/80 backdrop-blur-md border-b border-white/5 px-6 py-4 flex items-center justify-between">
+                <header className="sticky top-0 z-30 bg-white/80 dark:bg-charcoal/80 backdrop-blur-md border-b border-slate-200 dark:border-white/5 px-6 py-4 flex items-center justify-between transition-colors duration-300">
                     <div className="lg:hidden flex items-center gap-3">
                         <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="p-2 border border-white/10 rounded-lg">
                             <Menu size={20} />
@@ -94,9 +105,8 @@ export default function Dashboard({ user, onLogout }) {
                         <span className="font-bold text-lg">InvestAI</span>
                     </div>
 
-                    <div className="hidden lg:flex items-center bg-white/5 border border-white/5 rounded-full px-4 py-2 w-96">
-                        <Search size={16} className="text-white/40 mr-2" />
-                        <input className="bg-transparent border-none focus:outline-none text-sm w-full text-white placeholder:text-white/40" placeholder="Buscar ativos, relatórios..." />
+                    <div className="hidden lg:block w-96">
+                        <OmniSearch onSelect={handleAssetSelect} />
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -160,7 +170,7 @@ export default function Dashboard({ user, onLogout }) {
                             )}
                         </>
                     ) : currentView === "wallet" ? (
-                        <WalletDashboard />
+                        <WalletDashboard initialTicker={walletTicker} onTickerChange={setWalletTicker} />
                     ) : currentView === "academy" ? (
                         <Academy />
                     ) : (
@@ -205,7 +215,7 @@ export default function Dashboard({ user, onLogout }) {
 
 function NavItem({ icon, label, active, onClick }) {
     return (
-        <button onClick={onClick} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${active ? 'bg-lime-accent text-charcoal font-bold' : 'text-white/60 hover:bg-white/5 hover:text-white'}`}>
+        <button onClick={onClick} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${active ? 'bg-lime-accent text-charcoal font-bold shadow-sm' : 'text-slate-500 dark:text-white/60 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'}`}>
             {icon}
             <span className="text-sm">{label}</span>
         </button>
